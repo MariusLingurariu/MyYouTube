@@ -21,6 +21,8 @@
 		2990791E2133D54C0041B46B /* CommentSnippetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990791D2133D54C0041B46B /* CommentSnippetModel.swift */; };
 		299079202133DDB00041B46B /* RepliesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990791F2133DDB00041B46B /* RepliesModel.swift */; };
 		299079222133ECF70041B46B /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 299079212133ECF70041B46B /* CommentCell.swift */; };
+		2990792B213451230041B46B /* ReplayViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990792A213451230041B46B /* ReplayViewCell.swift */; };
+		2990792D213453710041B46B /* ReplayHeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2990792C213453710041B46B /* ReplayHeadCell.swift */; };
 		2993224D212D593F001A384E /* ChannelDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993224C212D593F001A384E /* ChannelDetails.swift */; };
 		2993224F212D8EEE001A384E /* VideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2993224E212D8EEE001A384E /* VideoVC.swift */; };
 		29BAF30E212BF71200B260D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29BAF30D212BF71200B260D6 /* AppDelegate.swift */; };
@@ -51,6 +53,8 @@
 		2990791D2133D54C0041B46B /* CommentSnippetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentSnippetModel.swift; sourceTree = "<group>"; };
 		2990791F2133DDB00041B46B /* RepliesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepliesModel.swift; sourceTree = "<group>"; };
 		299079212133ECF70041B46B /* CommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentCell.swift; sourceTree = "<group>"; };
+		2990792A213451230041B46B /* ReplayViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayViewCell.swift; sourceTree = "<group>"; };
+		2990792C213453710041B46B /* ReplayHeadCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayHeadCell.swift; sourceTree = "<group>"; };
 		2993224C212D593F001A384E /* ChannelDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelDetails.swift; sourceTree = "<group>"; };
 		2993224E212D8EEE001A384E /* VideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoVC.swift; sourceTree = "<group>"; };
 		29BAF30A212BF71200B260D6 /* MyYouTubeB02.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyYouTubeB02.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,11 +94,8 @@
 		294109BB212C00BF00A38F29 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				294109C0212C02FA00A38F29 /* VideoCell.swift */,
-				2974DE69212FF4270093553B /* VideoDescriptionCell.swift */,
-				2974DE6B212FF9030093553B /* DescriptionLblCell.swift */,
-				2974DE6D212FFA4F0093553B /* SugestedVideoCell.swift */,
-				299079212133ECF70041B46B /* CommentCell.swift */,
+				2990792F213453CC0041B46B /* Video Detail Cells */,
+				2990792E213453A20041B46B /* Replay Section */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -147,6 +148,27 @@
 				2990791F2133DDB00041B46B /* RepliesModel.swift */,
 			);
 			path = "Comments Model";
+			sourceTree = "<group>";
+		};
+		2990792E213453A20041B46B /* Replay Section */ = {
+			isa = PBXGroup;
+			children = (
+				2990792A213451230041B46B /* ReplayViewCell.swift */,
+				2990792C213453710041B46B /* ReplayHeadCell.swift */,
+			);
+			path = "Replay Section";
+			sourceTree = "<group>";
+		};
+		2990792F213453CC0041B46B /* Video Detail Cells */ = {
+			isa = PBXGroup;
+			children = (
+				294109C0212C02FA00A38F29 /* VideoCell.swift */,
+				2974DE69212FF4270093553B /* VideoDescriptionCell.swift */,
+				2974DE6B212FF9030093553B /* DescriptionLblCell.swift */,
+				2974DE6D212FFA4F0093553B /* SugestedVideoCell.swift */,
+				299079212133ECF70041B46B /* CommentCell.swift */,
+			);
+			path = "Video Detail Cells";
 			sourceTree = "<group>";
 		};
 		29BAF301212BF71200B260D6 = {
@@ -322,6 +344,7 @@
 				2993224D212D593F001A384E /* ChannelDetails.swift in Sources */,
 				294109CB212C2FC200A38F29 /* VideosHandler.swift in Sources */,
 				299079202133DDB00041B46B /* RepliesModel.swift in Sources */,
+				2990792B213451230041B46B /* ReplayViewCell.swift in Sources */,
 				2974DE6C212FF9030093553B /* DescriptionLblCell.swift in Sources */,
 				29BAF310212BF71200B260D6 /* HomeVC.swift in Sources */,
 				294109CD212C38D200A38F29 /* Thumbnails.swift in Sources */,
@@ -329,6 +352,7 @@
 				2974DE6E212FFA4F0093553B /* SugestedVideoCell.swift in Sources */,
 				2990791E2133D54C0041B46B /* CommentSnippetModel.swift in Sources */,
 				294109CF212C512A00A38F29 /* Snippet.swift in Sources */,
+				2990792D213453710041B46B /* ReplayHeadCell.swift in Sources */,
 				294109C8212C0FEB00A38F29 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

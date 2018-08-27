@@ -13,6 +13,8 @@ class VideoVC: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var video: UIWebView!
     @IBOutlet weak var videoList: UITableView!
+    @IBOutlet var repliesSection: UIView!
+    @IBOutlet weak var repliesTableView: UITableView!
     
     // MARK: - Public Properties
     public var videoId: String = ""
@@ -23,6 +25,7 @@ class VideoVC: UIViewController {
     private var viewsNumberShort: String = ""
     private var desc: String = ""
     private var showDescription = false
+    private var replies: [CommentSnippetModel] = []
     
     // MARK: - Overriden Methods
     override func viewDidLoad() {
@@ -89,69 +92,98 @@ class VideoVC: UIViewController {
 extension VideoVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //on cell click
-        switch indexPath[0]{
-        case 0:
-            showDescription = !showDescription
-            self.videoList.reloadData()
-        default:
-            print(indexPath.section)
+        if tableView == self.videoList {
+            switch indexPath[0]{
+            case 0:
+                showDescription = !showDescription
+                self.videoList.reloadData()
+            default:
+                print(indexPath.section)
+            }
+            if indexPath.section == 2 {
+            }
         }
-        if indexPath.section == 2 {
+        if tableView == self.repliesTableView {
+            
         }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case 0:
-            return 1
-        case 1:
-            return showDescription ? 1 : 0
-        case 2:
-            return VideosHandler.shared.sugestedVideos.count
-        default:
-            return VideosHandler.shared.commentList.count
+        if tableView == self.videoList {
+            switch section {
+            case 0:
+                return 1
+            case 1:
+                return showDescription ? 1 : 0
+            case 2:
+                return VideosHandler.shared.sugestedVideos.count
+            default:
+                return VideosHandler.shared.commentList.count
+            }
         }
+        if tableView == self.repliesTableView {
+            switch section {
+            case 0:
+                return 1
+            default:
+                return replies.count
+            }
+        }
+        return 0
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        if tableView == self.videoList {
+            return 4
+        }
+        if tableView == self.repliesTableView {
+            
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case 0:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "videoDescriptionCell") as? VideoDescriptionCell {
-                let videoDet = VideosHandler.shared.videoDetails != nil ? VideosHandler.shared.videoDetails! : VideoDetailsModel()
-                cell.configureCell(videoDescription: videoDet.snippet.title,
-                                   viewsNumber: videoDet.viewCount,
-                                   likesNumber: videoDet.likeCount,
-                                   dislikesNumber: videoDet.dislikeCount,
-                                   showDescription: self.showDescription)
-                self.desc = videoDet.snippet.description
-                return cell
-            }
-        case 1:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionLblCell") as? DescriptionLblCell {
-                cell.configureCell(description: desc)
-                return cell
-            }
-        case 2:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "sugestedVideoCell") as? SugestedVideoCell {
-                let sugestedVideos = VideosHandler.shared.sugestedVideos.count > indexPath.row ? VideosHandler.shared.sugestedVideos[indexPath.row] : VideoModel()
-                cell.configureCell(videoModel: sugestedVideos)
-                return cell
-            }
-        default:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell") as? CommentCell {
-                if VideosHandler.shared.commentList.count - 2 <= indexPath.row{
-                    loadComments()
-                } else {
-                    cell.configureCell(commentModel: VideosHandler.shared.commentList[indexPath.row])
+        if tableView == self.videoList {
+            switch indexPath.section {
+            case 0:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "videoDescriptionCell") as? VideoDescriptionCell {
+                    let videoDet = VideosHandler.shared.videoDetails != nil ? VideosHandler.shared.videoDetails! : VideoDetailsModel()
+                    cell.configureCell(videoDescription: videoDet.snippet.title,
+                                       viewsNumber: videoDet.viewCount,
+                                       likesNumber: videoDet.likeCount,
+                                       dislikesNumber: videoDet.dislikeCount,
+                                       showDescription: self.showDescription)
+                    self.desc = videoDet.snippet.description
+                    return cell
                 }
-                return cell
+            case 1:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "descriptionLblCell") as? DescriptionLblCell {
+                    cell.configureCell(description: desc)
+                    return cell
+                }
+            case 2:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "sugestedVideoCell") as? SugestedVideoCell {
+                    let sugestedVideos = VideosHandler.shared.sugestedVideos.count > indexPath.row ? VideosHandler.shared.sugestedVideos[indexPath.row] : VideoModel()
+                    cell.configureCell(videoModel: sugestedVideos)
+                    return cell
+                }
+            default:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "commentCell") as? CommentCell {
+                    if VideosHandler.shared.commentList.count - 2 <= indexPath.row{
+                        loadComments()
+                    } else {
+                        cell.configureCell(commentModel: VideosHandler.shared.commentList[indexPath.row])
+                    }
+                    return cell
+                }
             }
+            return SugestedVideoCell()
         }
-        return SugestedVideoCell()
+        if tableView == self.repliesTableView {
+            
+        }
+         return SugestedVideoCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
