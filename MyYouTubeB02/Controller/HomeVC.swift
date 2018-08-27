@@ -19,13 +19,7 @@ class HomeVC: UIViewController {
         performSegue(withIdentifier: "VideoVC", sender: videoId)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destination = segue.destination as? VideoVC {
-            if let videoId = sender as? String {
-                destination.videoId = videoId
-            }
-        }
-    }
+    
     // MARK: - Private Properties
     
     // MARK: - Overriden Methods
@@ -45,6 +39,18 @@ class HomeVC: UIViewController {
             }
         }
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? VideoVC {
+            if let videoId = sender as? String {
+                destination.videoId = videoId
+            }
+        }
     }
     
     // MARK: - IBActions
@@ -79,7 +85,6 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             cell.cofifigureCell(videoModel: vid, channelDetails: chanelDetails)
             if indexPath.row == VideosHandler.shared.trendingVideos.count - 1 {
                 VideosHandler.shared.downloadTrendingVideos {
-                    self.videoList.reloadData()
                     for item in VideosHandler.shared.trendingVideos {
                         VideosHandler.shared.channelDetailsId = item.snippet.channelId
                         VideosHandler.shared.downloadChannelDetails {
