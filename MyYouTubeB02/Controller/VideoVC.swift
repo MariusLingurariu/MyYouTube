@@ -10,11 +10,15 @@ import UIKit
 import WebKit
 
 class VideoVC: UIViewController {
+    
     // MARK: - IBOutlets
     @IBOutlet weak var video: UIWebView!
     @IBOutlet weak var videoList: UITableView!
+    
     @IBOutlet var repliesSection: UIView!
     @IBOutlet weak var repliesTableView: UITableView!
+    
+    @IBOutlet weak var videoDetails: UIView!
     
     // MARK: - Public Properties
     public var videoId: String = ""
@@ -26,6 +30,7 @@ class VideoVC: UIViewController {
     private var desc: String = ""
     private var showDescription = false
     private var replies: [CommentSnippetModel] = []
+    private var commIndex: Int = 0
     
     // MARK: - Overriden Methods
     override func viewDidLoad() {
@@ -34,6 +39,9 @@ class VideoVC: UIViewController {
         
         videoList.delegate = self
         videoList.dataSource = self
+        
+        repliesTableView.delegate = self
+        repliesTableView.dataSource = self
         
         VideosHandler.shared.sugestedVideos = []
         VideosHandler.shared.commentList = []
@@ -50,6 +58,9 @@ class VideoVC: UIViewController {
     }
     
     // MARK: - IBActions
+    @IBAction func closeRepliesSection(_ sender: Any) {
+        hideRepliesSection()
+    }
     
     // MARK: - Public Methods
     func loadVideo(videoId: String) {
@@ -80,6 +91,27 @@ class VideoVC: UIViewController {
     }
     
     // MARK: - Private Methods
+    private func reinitializeView() {
+        VideosHandler.shared.sugestedVideos = []
+        VideosHandler.shared.commentList = []
+        loadVideo(videoId: self.videoId)
+    }
+    
+    private func hideRepliesSection(){
+        UIView.animate(withDuration: 0.5) {
+            self.repliesSection.frame.origin.y = self.videoDetails.bounds.maxY
+        }
+        videoDetails.willRemoveSubview(repliesSection)
+    }
+    
+    private func showRepliesSection(){
+        videoDetails.addSubview(repliesSection)
+        repliesSection.frame = CGRect(origin: CGPoint(x: 0, y: videoDetails.bounds.maxY), size: videoDetails.bounds.size)
+        repliesTableView.reloadData()
+        UIView.animate(withDuration: 0.5) {
+            self.repliesSection.frame.origin.y = 0
+        }
+    }
     
     private func loadComments(){
         VideosHandler.shared.commentsVideoId = self.videoId
@@ -101,6 +133,14 @@ extension VideoVC: UITableViewDelegate, UITableViewDataSource {
                 print(indexPath.section)
             }
             if indexPath.section == 2 {
+                self.videoId = VideosHandler.shared.sugestedVideos[indexPath.row].videoId
+                reinitializeView()
+            }
+            if indexPath.section == 3 {
+                if VideosHandler.shared.commentList[indexPath.row].totalReplyCount > 0 {
+                    commIndex = indexPath.row
+                    showRepliesSection()
+                }
             }
         }
         if tableView == self.repliesTableView {
@@ -127,7 +167,7 @@ extension VideoVC: UITableViewDelegate, UITableViewDataSource {
             case 0:
                 return 1
             default:
-                return replies.count
+                return VideosHandler.shared.commentList[commIndex].replies.replies.count
             }
         }
         return 0
@@ -138,7 +178,7 @@ extension VideoVC: UITableViewDelegate, UITableViewDataSource {
             return 4
         }
         if tableView == self.repliesTableView {
-            
+            return 2
         }
         return 0
     }
@@ -181,7 +221,22 @@ extension VideoVC: UITableViewDelegate, UITableViewDataSource {
             return SugestedVideoCell()
         }
         if tableView == self.repliesTableView {
-            
+            switch indexPath.section {
+            case 0:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "ReplayHeadCell") as? ReplayHeadCell {
+                    let headCell = VideosHandler.shared.commentList[commIndex].commentSnippet != nil ?
+                        VideosHandler.shared.commentList[commIndex] : CommentModel()
+                    cell.configureCell(commentModel: headCell)
+                    return cell
+                }
+            default:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: "ReplayViewCell") as? ReplayViewCell {
+                    let replayCell = VideosHandler.shared.commentList[commIndex].replies.replies[indexPath.row] != nil ?
+                        VideosHandler.shared.commentList[commIndex].replies.replies[indexPath.row] : CommentSnippetModel()
+                    cell.configureCell(commentModel: replayCell)
+                    return cell
+                }
+            }
         }
          return SugestedVideoCell()
     }

@@ -21,7 +21,7 @@ class RepliesModel {
     init(json: JSON) {
         if let arrayJson = JSON(json["comments"]).array {
             for item in arrayJson {
-                let commentModel = CommentSnippetModel(json: item)
+                let commentModel = CommentSnippetModel(json: item["snippet"])
                 replies.append(commentModel)
             }
         }

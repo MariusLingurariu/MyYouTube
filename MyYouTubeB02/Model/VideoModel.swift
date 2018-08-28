@@ -41,7 +41,12 @@ class VideoModel {
     }
     
     init(json: JSON) {
-        _videoId = json["id"].stringValue
+        if json["id"].stringValue != "" {
+            _videoId = json["id"].stringValue
+        } else {
+            _videoId = json["id"]["videoId"].stringValue
+        }
+        
         _snippet = Snippet(json: json["snippet"])
     }
 }

@@ -601,6 +601,7 @@
                         <outlet property="repliesSection" destination="fqq-YN-I9b" id="vdh-SA-XSe"/>
                         <outlet property="repliesTableView" destination="gPZ-63-orb" id="Qk2-bJ-XgX"/>
                         <outlet property="video" destination="0gc-xa-Zzk" id="whc-5e-VNh"/>
+                        <outlet property="videoDetails" destination="UAl-IN-2W4" id="XCg-Ly-3nj"/>
                         <outlet property="videoList" destination="Vts-Zx-GyV" id="sfr-7E-DpU"/>
                         <outlet property="view" destination="ZAa-pd-pTH" id="KgI-j8-Lhi"/>
                     </connections>
@@ -627,6 +628,9 @@
                                             <rect key="frame" x="266" y="7" width="30" height="30"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Exit"/>
+                                            <connections>
+                                                <action selector="closeRepliesSection:" destination="f6u-OD-L6N" eventType="touchUpInside" id="dyU-At-CU4"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -638,7 +642,7 @@
                                     <rect key="frame" x="0.0" y="45" width="312" height="343"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <prototypes>
-                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="118" id="YBg-HT-YU6" customClass="ReplayHeadCell" customModule="MyYouTubeB02" customModuleProvider="target">
+                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReplayHeadCell" rowHeight="118" id="YBg-HT-YU6" customClass="ReplayHeadCell" customModule="MyYouTubeB02" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="28" width="312" height="118"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="YBg-HT-YU6" id="F7K-41-eii">
@@ -724,7 +728,7 @@
                                                 <outlet property="repliesNumber" destination="qWH-Fn-kcH" id="EXF-WI-HoQ"/>
                                             </connections>
                                         </tableViewCell>
-                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="137" id="xF9-y5-3fs" customClass="ReplayViewCell" customModule="MyYouTubeB02" customModuleProvider="target">
+                                        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReplayViewCell" rowHeight="137" id="xF9-y5-3fs" customClass="ReplayViewCell" customModule="MyYouTubeB02" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="146" width="312" height="137"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="xF9-y5-3fs" id="OGp-am-Uo7">
@@ -809,7 +813,7 @@
                     <viewLayoutGuide key="safeArea" id="Sff-Fd-keO"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="2565" y="15"/>
+            <point key="canvasLocation" x="2571" y="4"/>
         </scene>
         <!--ProfileVC-->
         <scene sceneID="00h-w0-2Xa">

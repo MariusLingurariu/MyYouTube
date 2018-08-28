@@ -16,13 +16,13 @@ class ReplayViewCell: UITableViewCell {
     @IBOutlet weak var likesNumber: UILabel!
     
     // MARK: - Public Methods
-    func configureCell (commentModel: CommentModel) {
+    func configureCell (commentModel: CommentSnippetModel) {
         
-        let profileImageUrl = commentModel.commentSnippet.authorProfileImageUrl
+        let profileImageUrl = commentModel.authorProfileImageUrl
         if profileImageUrl != "" { profileImage.kf.setImage(with: URL(string: profileImageUrl!)!) }
         
-        channelTitle.text = commentModel.commentSnippet.authorDisplayName
-        comment.text = commentModel.commentSnippet.textOriginal
-        likesNumber.text = String(commentModel.commentSnippet.likeCount)
+        channelTitle.text = commentModel.authorDisplayName
+        comment.text = commentModel.textOriginal
+        likesNumber.text = String(commentModel.likeCount)
     }
 }
